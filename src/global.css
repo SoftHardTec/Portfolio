@@ -1,0 +1,16 @@
+@import "tailwindcss";
+@import "./assets/fonts/Montserrat/Montserrat.css";
+@import "tw-animate-css";
+
+
+body{
+  cursor:none;
+    background-color:var(--color-bg);
+  color: white;
+}
+@theme {
+    --font-sans: 'Montserrat', sans-serif;
+    --color-bg: #0c0c0c;
+    --color-primary-violet: #B21DDB;
+}
+

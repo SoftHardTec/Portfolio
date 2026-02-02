@@ -1,5 +1,5 @@
 import Button from "@/components/Button";
-import BlurText from "@/components/animatedText";
+import BlurText from "@/components/ui/animatedText";
 
 export default function Hero() {
   return (
@@ -10,7 +10,7 @@ export default function Hero() {
           animateBy="words"
           className="text-center sm:text-left"
         >
-          <div className="flex flex-col items-center sm:items-start justify-center gap-3">
+          <div className="flex flex-col items-center italic sm:items-start justify-center gap-3">
             <h1 className="sm:text-5xl text-3xl font-bold text-primary-violet">
               Hi, I'm{" "}
             </h1>
@@ -41,9 +41,8 @@ export default function Hero() {
 
       <div className=" justify-center hidden sm:flex items-center w-full h-auto relative rounded-3xl ">
         <img
-          src="./hero.jpg"
+          src="/hero.jpg"
           alt="Hero"
-          sizes="20px"
           className="w-170 h-120 relative right-0 rounded-4xl  object-covert mask-y-from-70% mask-y-to-90% "
         />
       </div>

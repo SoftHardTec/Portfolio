@@ -8,12 +8,12 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed bg-transparent top-0 z-50 h-29 w-screen flex sm:px-10 items-center ">
+      <div className="fixed bg-bg top-0 z-50 h-29 w-screen flex sm:px-10 items-center ">
         <div className="flex justify-start absolute left-0 ml-6 p-4">
           <img
-            src="YonalfredDev.png"
+            src="/src/assets/YonalfredDev.png"
             alt="logo"
-            className="hover:scale-110 duration-300 transition-all size-60"
+            className="hover:scale-110 duration-300 transition-all size-40 md:size-60 "
           />
         </div>
         <nav className="hidden lg:flex md:justify-end w-full mr-10">
@@ -42,13 +42,13 @@ export default function Navbar() {
           aria-label="Toggle Menu"
         >
           <div
-            className={`w-8 h-0.5 bg-white transition-all duration-300 ease-in-out ${openMenu ? "rotate-45 translate-y-2.5" : ""}`}
+            className={`w-6 h-0.5 bg-white transition-all duration-300 ease-in-out ${openMenu ? "rotate-45 translate-y-2.5" : ""}`}
           />
           <div
-            className={`w-8 h-0.5 bg-white transition-all duration-300 ease-in-out ${openMenu ? "opacity-0" : ""}`}
+            className={`w-6 h-0.5 bg-white transition-all duration-300 ease-in-out ${openMenu ? "opacity-0" : ""}`}
           />
           <div
-            className={`w-8 h-0.5 bg-white transition-all duration-300 ease-in-out ${openMenu ? "-rotate-45 -translate-y-2.5" : ""}`}
+            className={`w-6 h-0.5 bg-white transition-all duration-300 ease-in-out ${openMenu ? "-rotate-45 -translate-y-2.5" : ""}`}
           />
         </button>
       </div>

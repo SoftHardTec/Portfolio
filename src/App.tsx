@@ -1,33 +1,36 @@
 import "./global.css";
-import Navbar from "./components/ui/Navbar";
-import GlowCursor from "./components/cursorAnimate/index.tsx";
+import Navbar from "./components/layout/Navbar/index.tsx";
+import GlowCursor from "./components/ui/cursorAnimate/index.tsx";
 import Hero from "./components/hero/index.tsx";
-import Antigravity from "@/components/ui/Antigravity";
-import { useMediaQuery } from "@/hooks/use-media-query.ts";
+import Antigravity from "./components/ui/Antigravity";
+import { useMediaQuery } from "./hooks/use-media-query.ts";
+import SkillsPrograming from "./components/skillsProgramming";
+import Footer from "./components/layout/Footer";
 
 function App() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const antigravityProps = {
-    count: 170,
-    magnetRadius: 5,
-    ringRadius: 10,
+    count: 200,
+    magnetRadius: 10,
+    ringRadius: 9,
     waveSpeed: 0.4,
     waveAmplitude: 0.9,
     particleSize: 0.5,
     lerpSpeed: 0.1,
     color: "#b21ddb",
     autoAnimate: false,
-    particleVariance: 0.6,
+    particleVariance: 0.1,
     rotationSpeed: 0.1,
     depthFactor: 0.3,
-    pulseSpeed: 1.5,
+    pulseSpeed: 5,
     particleShape: "capsule" as const,
-    fieldStrength: 13,
+    fieldStrength: 7,
   };
 
   return (
-    <div className="flex h-screen w-full flex-col">
-      <div className="w-screen h-screen fixed flex justify-center items-center z-[-1]">
+    <div className="flex relative min-h-screen  w-full flex-col">
+      <GlowCursor />
+      <div className="w-screen h-screen fixed flex justify-center items-center z-1">
         {isDesktop ? (
           <>
             <Antigravity {...antigravityProps} />
@@ -40,10 +43,17 @@ function App() {
       <header className="z-10 mb-8">
         <Navbar />
       </header>
-      <main className="grow px-15 sm:30">
-        <Hero />
+      <main className="grow relative px-15 sm:px-30">
+        <section className="h-screen flex justify-center items-center">
+          <Hero />
+        </section>
+        <section className="h-screen flex justify-center">
+          <SkillsPrograming />
+        </section>
       </main>
-      <GlowCursor />
+      <footer className="relative w-full">
+        <Footer />
+      </footer>
     </div>
   );
 }

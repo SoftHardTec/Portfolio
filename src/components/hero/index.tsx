@@ -4,7 +4,7 @@ import BlurText from "@/components/ui/animatedText";
 export default function Hero() {
   return (
     <div className="h-full w-full flex sm:grid sm:grid-cols-2">
-      <div className="flex flex-col items-center sm:items-start justify-center gap-3  w-full text-justify sm:text-left">
+      <div className="flex flex-col items-center sm:items-start justify-center gap-3  w-full text-center sm:text-left">
         <BlurText
           delay={200}
           animateBy="words"
@@ -15,7 +15,7 @@ export default function Hero() {
               Hi, I'm{" "}
             </h1>
             <h1 className="sm:text-5xl md:text-6xl text-4xl font-bold">
-              Yonalfred Guzmán
+              {"<Yonalfred Guzmán />"}
             </h1>
             <h1 className="sm:text-5xl md:text-6xl text-4xl font-bold">
               Web Developer

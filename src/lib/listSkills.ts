@@ -1,11 +1,11 @@
 export const skillProgramming = [
   {
-    name: "CSS3 ",
-    image: "src/assets/CSS3.svg",
-  },
-  {
     name: "HTML5",
     image: "src/assets/HTML5.svg",
+  },
+  {
+    name: "CSS3 ",
+    image: "src/assets/CSS3.svg",
   },
   {
     name: "JavaScript",
@@ -38,5 +38,20 @@ export const skillProgramming = [
   {
     name: "Node JS",
     image: "src/assets/Node.png",
+  },
+];
+
+export const skillsTools = [
+  {
+    name: "Git",
+    image: "src/assets/Git.svg",
+  },
+  {
+    name: "GitHub",
+    image: "src/assets/GitHub.svg",
+  },
+  {
+    name: "Terminal",
+    image: "src/assets/Terminal.svg",
   },
 ];

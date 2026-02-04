@@ -54,14 +54,9 @@ export default function Navbar() {
       </div>
 
       <div
-        className={`fixed inset-y-0 right-0 w-[30vh] lg:hidden h-[45vh] rounded-b-xl max-w-xs bg-black/90 backdrop-blur- shadow-2xl transition-transform duration-300 ease-in-out z-40 ${openMenu ? "translate-y-0" : "-translate-y-full"}`}
+        className={`fixed inset-y-0 right-0 w-[28vh] lg:hidden h-full rounded-b-xl max-w-xs bg-bg pt-30 backdrop-blur-xl shadow-2xl transition-transform duration-300 ease-in-out z-40 ${openMenu ? "translate-x-0" : "translate-x-full"}`}
       >
         <nav className="flex flex-col items-center justify-start  h-full">
-          <div className="flex justify-start items-center relative left-0 ml-6 p-4">
-            <h1 className="text-2xl font-bold text-white mr-10 mt-6 mb-10">
-              Menu
-            </h1>
-          </div>
           <ul className="flex flex-col gap-10 text-xl font-bold text-white">
             <li className={`${liStyle}`} onClick={() => setOpenMenu(false)}>
               <House size={20} />
@@ -69,7 +64,11 @@ export default function Navbar() {
             </li>
             <li className={`${liStyle}`} onClick={() => setOpenMenu(false)}>
               <User size={20} />
-              About
+              About me
+            </li>
+            <li className={`${liStyle}`} onClick={() => setOpenMenu(false)}>
+              <User size={20} />
+              Skills
             </li>
             <li className={`${liStyle}`} onClick={() => setOpenMenu(false)}>
               <Folder size={20} />

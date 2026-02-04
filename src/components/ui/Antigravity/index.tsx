@@ -1,7 +1,6 @@
-
-import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { useMemo, useRef, useState } from 'react';
-import * as THREE from 'three';
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { useMemo, useRef, useState, useEffect } from "react";
+import * as THREE from "three";
 
 interface AntigravityProps {
   count?: number;
@@ -17,7 +16,7 @@ interface AntigravityProps {
   rotationSpeed?: number;
   depthFactor?: number;
   pulseSpeed?: number;
-  particleShape?: 'capsule' | 'sphere' | 'box' | 'tetrahedron';
+  particleShape?: "capsule" | "sphere" | "box" | "tetrahedron";
   fieldStrength?: number;
 }
 
@@ -53,33 +52,58 @@ interface Particle {
   randomRadiusOffset: number;
 }
 
+const floatSpeed = 0.2;
+const floatAmp = 3;
+
 const AntigravityInner = ({
   count = 300,
-  magnetRadius = 10,
+
   ringRadius = 10,
   waveSpeed = 0.4,
   waveAmplitude = 1,
   particleSize = 2,
   lerpSpeed = 0.1,
-  color = '#FF9FFC',
-  autoAnimate = false,
+  color = "#FF9FFC",
+
   particleVariance = 1,
   rotationSpeed = 0,
   depthFactor = 1,
   pulseSpeed = 3,
-  particleShape = 'capsule',
+  particleShape = "capsule",
   fieldStrength = 10,
 }: AntigravityProps) => {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const { viewport } = useThree();
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
-  const lastMousePos = useRef({ x: 0, y: 0 });
-  const lastMouseMoveTime = useRef(0);
-  const virtualMouse = useRef({ x: 0, y: 0 });
+  // Interaction state
+  const interaction = useRef({ active: false, x: 0, y: 0 });
 
-  // Generate stable random seeds dependent only on 'count'
-  // using lazy initialization to avoid "impure function" lint error during render
+  // Click handler to trigger the circle formation
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      // Calculate cursor position in viewport coordinates directly from event
+      // This bypasses any potential R3F pointer lag
+      const normalizedX = (event.clientX / window.innerWidth) * 2 - 1;
+      const normalizedY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      const x = (normalizedX * viewport.width) / 2;
+      const y = (normalizedY * viewport.height) / 2;
+
+      interaction.current = { active: true, x, y };
+
+      // Return to place after 2 seconds
+      setTimeout(() => {
+        interaction.current = { ...interaction.current, active: false };
+      }, 2000);
+    };
+
+    // Attach to window to catch clicks anywhere
+    window.addEventListener("pointerdown", handlePointerDown);
+    return () => window.removeEventListener("pointerdown", handlePointerDown);
+  }, [viewport]);
+
+  // Generate stable random seeds
   const [seeds] = useState<ParticleSeed[]>(() => {
     const temp: ParticleSeed[] = [];
     for (let i = 0; i < count; i++) {
@@ -100,8 +124,6 @@ const AntigravityInner = ({
   });
 
   // Derive actual particles from seeds + viewport
-  // This recreates particles when viewport changes (resizing), preserving original behavior
-  // but without "setState in useEffect" or impure calls.
   const particles = useMemo<Particle[]>(() => {
     const width = viewport.width || 100;
     const height = viewport.height || 100;
@@ -121,7 +143,7 @@ const AntigravityInner = ({
         mx: x,
         my: y,
         mz: z,
-        cx: x, // Initial current position = target position
+        cx: x,
         cy: y,
         cz: z,
         vx: 0,
@@ -136,34 +158,12 @@ const AntigravityInner = ({
     const mesh = meshRef.current;
     if (!mesh) return;
 
-    const { viewport: v, pointer: m } = state;
-
-    const mouseDist = Math.sqrt(
-      Math.pow(m.x - lastMousePos.current.x, 2) + Math.pow(m.y - lastMousePos.current.y, 2)
-    );
-
-    if (mouseDist > 0.001) {
-      lastMouseMoveTime.current = Date.now();
-      lastMousePos.current = { x: m.x, y: m.y };
-    }
-
-    let destX = (m.x * v.width) / 2;
-    let destY = (m.y * v.height) / 2;
-
-    if (autoAnimate && Date.now() - lastMouseMoveTime.current > 2000) {
-      const time = state.clock.getElapsedTime();
-      destX = Math.sin(time * 0.5) * (v.width / 4);
-      destY = Math.cos(time * 0.5 * 2) * (v.height / 4);
-    }
-
-    const smoothFactor = 0.05;
-    virtualMouse.current.x += (destX - virtualMouse.current.x) * smoothFactor;
-    virtualMouse.current.y += (destY - virtualMouse.current.y) * smoothFactor;
-
-    const targetX = virtualMouse.current.x;
-    const targetY = virtualMouse.current.y;
+    // Determine target center (mouse or interaction point)
+    const targetX = interaction.current.active ? interaction.current.x : 0;
+    const targetY = interaction.current.active ? interaction.current.y : 0;
 
     const globalRotation = state.clock.getElapsedTime() * rotationSpeed;
+    const time = state.clock.getElapsedTime();
 
     particles.forEach((particle, i) => {
       const { speed, mx, my, mz, cz, randomRadiusOffset } = particle;
@@ -171,17 +171,28 @@ const AntigravityInner = ({
       particle.t += speed / 2;
       const t = particle.t;
 
-      const projectionFactor = 1 - cz / 50;
-      const projectedTargetX = targetX * projectionFactor;
-      const projectedTargetY = targetY * projectionFactor;
+      // Base Floating Movement (Minimal)
+      const floatX = Math.sin(time * floatSpeed + particle.xFactor) * floatAmp;
+      const floatY = Math.cos(time * floatSpeed + particle.yFactor) * floatAmp;
 
-      const dx = mx - projectedTargetX;
-      const dy = my - projectedTargetY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const targetPos = {
+        x: mx + floatX,
+        y: my + floatY,
+        z: mz * depthFactor,
+      };
 
-      const targetPos = { x: mx, y: my, z: mz * depthFactor };
+      // If interaction is active, Override with Circle Logic
+      if (interaction.current.active) {
+        const projectionFactor = 1 - cz / 50;
+        const projectedTargetX = targetX * projectionFactor;
+        const projectedTargetY = targetY * projectionFactor;
 
-      if (dist < magnetRadius) {
+        // Calculate angle from the interaction center to the particle's origin (mx, my)
+        // ensuring they form a circle around the click, keeping relative angular positions
+        const dx = mx - projectedTargetX;
+        const dy = my - projectedTargetY;
+        // Just use the particle's original angle relative to center?
+        // Or relative to the click point? Relative to click point creates a nice gathering effect.
         const angle = Math.atan2(dy, dx) + globalRotation;
 
         const wave = Math.sin(t * waveSpeed + angle) * (0.5 * waveAmplitude);
@@ -191,7 +202,8 @@ const AntigravityInner = ({
 
         targetPos.x = projectedTargetX + currentRingRadius * Math.cos(angle);
         targetPos.y = projectedTargetY + currentRingRadius * Math.sin(angle);
-        targetPos.z = mz * depthFactor + Math.sin(t) * (1 * waveAmplitude * depthFactor);
+        targetPos.z =
+          mz * depthFactor + Math.sin(t) * (1 * waveAmplitude * depthFactor);
       }
 
       particle.cx += (targetPos.x - particle.cx) * lerpSpeed;
@@ -200,23 +212,47 @@ const AntigravityInner = ({
 
       dummy.position.set(particle.cx, particle.cy, particle.cz);
 
-      dummy.lookAt(projectedTargetX, projectedTargetY, particle.cz);
+      // Orientation
+      // Look at the target (if active) or just float?
+      // Let's keep looking at the "center of interest" if active, or forward if not?
+      // Original code looked at `projectedTargetX`.
+      // Getting `projectedTargetX` even in float mode:
+      const lookAtX = interaction.current.active ? targetX : particle.cx;
+      const lookAtY = interaction.current.active ? targetY : particle.cy;
+      // If idle, maybe just look slightly shifting or fixed?
+      // Original code: `dummy.lookAt(projectedTargetX, ...)` where targetX was virtualMouse.
+
+      if (interaction.current.active) {
+        dummy.lookAt(lookAtX, lookAtY, particle.cz);
+      } else {
+        // Slight rotation or fixed orientation
+        dummy.rotation.set(0, 0, 0);
+        // Or keep looking at 0,0?
+        dummy.lookAt(0, 0, particle.cz);
+      }
+
       dummy.rotateX(Math.PI / 2);
 
-      const currentDistToMouse = Math.sqrt(
-        Math.pow(particle.cx - projectedTargetX, 2) +
-          Math.pow(particle.cy - projectedTargetY, 2)
-      );
+      // Scaling logic
+      // In float mode, maybe just constant pulse?
+      // In circle mode, check distance from ring?
+      // Let's simplify:
+      const pulse = 0.8 + Math.sin(t * pulseSpeed) * 0.2 * particleVariance;
+      let scaleFactor = pulse;
 
-      const distFromRing = Math.abs(currentDistToMouse - ringRadius);
-      let scaleFactor = 1 - distFromRing / 10;
+      if (interaction.current.active) {
+        // Enforce circle scaling logic
+        const currentDistToCenter = Math.sqrt(
+          Math.pow(particle.cx - targetX, 2) +
+            Math.pow(particle.cy - targetY, 2),
+        );
+        const distFromRing = Math.abs(currentDistToCenter - ringRadius);
+        let ringScale = 1 - distFromRing / 20; // softer falloff
+        ringScale = Math.max(0.5, Math.min(1.2, ringScale));
+        scaleFactor *= ringScale;
+      }
 
-      scaleFactor = Math.max(0, Math.min(1, scaleFactor));
-
-      const finalScale =
-        scaleFactor *
-        (0.8 + Math.sin(t * pulseSpeed) * 0.2 * particleVariance) *
-        particleSize;
+      const finalScale = scaleFactor * particleSize;
       dummy.scale.set(finalScale, finalScale, finalScale);
 
       dummy.updateMatrix();
@@ -229,10 +265,12 @@ const AntigravityInner = ({
 
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
-      {particleShape === 'capsule' && <capsuleGeometry args={[0.1, 0.4, 4, 8]} />}
-      {particleShape === 'sphere' && <sphereGeometry args={[0.2, 16, 16]} />}
-      {particleShape === 'box' && <boxGeometry args={[0.3, 0.3, 0.3]} />}
-      {particleShape === 'tetrahedron' && <tetrahedronGeometry args={[0.3]} />}
+      {particleShape === "capsule" && (
+        <capsuleGeometry args={[0.1, 0.4, 4, 8]} />
+      )}
+      {particleShape === "sphere" && <sphereGeometry args={[0.2, 16, 16]} />}
+      {particleShape === "box" && <boxGeometry args={[0.3, 0.3, 0.3]} />}
+      {particleShape === "tetrahedron" && <tetrahedronGeometry args={[0.3]} />}
       <meshBasicMaterial color={color} />
     </instancedMesh>
   );

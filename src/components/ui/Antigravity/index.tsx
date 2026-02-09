@@ -1,6 +1,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useMemo, useRef, useState, useEffect } from "react";
 import * as THREE from "three";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 
 interface AntigravityProps {
   count?: number;
@@ -18,6 +19,7 @@ interface AntigravityProps {
   pulseSpeed?: number;
   particleShape?: "capsule" | "sphere" | "box" | "tetrahedron";
   fieldStrength?: number;
+  blur?: number;
 }
 
 interface ParticleSeed {
@@ -71,6 +73,7 @@ const AntigravityInner = ({
   pulseSpeed = 3,
   particleShape = "capsule",
   fieldStrength = 10,
+  blur = 0,
 }: AntigravityProps) => {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const { viewport } = useThree();
@@ -81,6 +84,7 @@ const AntigravityInner = ({
 
   // Click handler to trigger the circle formation
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
     const handlePointerDown = (event: PointerEvent) => {
       // Calculate cursor position in viewport coordinates directly from event
       // This bypasses any potential R3F pointer lag
@@ -93,14 +97,18 @@ const AntigravityInner = ({
       interaction.current = { active: true, x, y };
 
       // Return to place after 2 seconds
-      setTimeout(() => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
         interaction.current = { ...interaction.current, active: false };
       }, 2000);
     };
 
     // Attach to window to catch clicks anywhere
     window.addEventListener("pointerdown", handlePointerDown);
-    return () => window.removeEventListener("pointerdown", handlePointerDown);
+    return () => {
+      window.removeEventListener("pointerdown", handlePointerDown);
+      clearTimeout(timeoutId);
+    };
   }, [viewport]);
 
   // Generate stable random seeds
@@ -264,15 +272,29 @@ const AntigravityInner = ({
   });
 
   return (
-    <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
-      {particleShape === "capsule" && (
-        <capsuleGeometry args={[0.1, 0.4, 4, 8]} />
+    <>
+      <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
+        {particleShape === "capsule" && (
+          <capsuleGeometry args={[0.1, 0.4, 4, 8]} />
+        )}
+        {particleShape === "sphere" && <sphereGeometry args={[0.2, 16, 16]} />}
+        {particleShape === "box" && <boxGeometry args={[0.3, 0.3, 0.3]} />}
+        {particleShape === "tetrahedron" && (
+          <tetrahedronGeometry args={[0.3]} />
+        )}
+        <meshBasicMaterial color={color} />
+      </instancedMesh>
+      {blur > 0 && (
+        <EffectComposer>
+          <Bloom
+            luminanceThreshold={0}
+            luminanceSmoothing={0.9}
+            height={300}
+            intensity={blur}
+          />
+        </EffectComposer>
       )}
-      {particleShape === "sphere" && <sphereGeometry args={[0.2, 16, 16]} />}
-      {particleShape === "box" && <boxGeometry args={[0.3, 0.3, 0.3]} />}
-      {particleShape === "tetrahedron" && <tetrahedronGeometry args={[0.3]} />}
-      <meshBasicMaterial color={color} />
-    </instancedMesh>
+    </>
   );
 };
 

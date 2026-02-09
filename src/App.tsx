@@ -5,6 +5,7 @@ import Hero from "./components/hero/index.tsx";
 import Antigravity from "./components/ui/Antigravity";
 import SkillsPrograming from "./components/skills/index.tsx";
 import Footer from "./components/layout/Footer";
+import AboutMe from "./components/aboutMe/index.tsx";
 
 const AntigravityAll = () => {
   return (
@@ -25,32 +26,46 @@ const AntigravityAll = () => {
         pulseSpeed={5}
         particleShape="capsule"
         fieldStrength={7}
+        blur={15}
       />
     </div>
   );
 };
 function App() {
   return (
-    <div className="flex relative h-screen w-full flex-col overflow-y-auto snap-y snap-mandatory ">
+    <div className="flex relative h-full w-full flex-col px-10 md:px-20 lg:px-30 bg-bg overflow-x-hidden">
       <GlowCursor />
-      <header className="z-50">
+      <AntigravityAll />
+      <header className="z-50 ">
         <Navbar />
       </header>
-      <main className="grow relative">
-        <section className="sticky top-0 z-10 h-screen w-full bg-bg flex justify-center items-center overflow-hidden snap-start">
-          <AntigravityAll />
-          <div className="relative z-10 w-full px-15 sm:px-30">
+      <main className="grow relative min-h-[calc(100vh-7rem)] ">
+        <section
+          id="home"
+          className="relative h-screen w-full flex justify-center items-center"
+        >
+          <div className="relative z-10 w-full ">
             <Hero />
           </div>
         </section>
-        <section className="sticky top-0 z-20 h-screen w-full bg-bg flex justify-center items-center overflow-hidden snap-start">
-          <AntigravityAll />
-          <div className="relative z-10 w-full px-15 sm:px-30">
+        <section
+          id="aboutMe"
+          className="relative h-screen w-full flex justify-center items-center"
+        >
+          <div className="relative z-10 w-full ">
+            <AboutMe />
+          </div>
+        </section>
+        <section
+          id="skills"
+          className="relative h-screen w-full flex justify-center items-center"
+        >
+          <div className="relative z-10 w-full ">
             <SkillsPrograming />
           </div>
         </section>
       </main>
-      <footer className="relative z-30 w-full bg-bg snap-start">
+      <footer id="contact" className="relative z-30 w-full bg-bg snap-start">
         <Footer />
       </footer>
     </div>

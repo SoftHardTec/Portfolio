@@ -3,11 +3,11 @@ import { skillProgramming, skillsTools } from "@/lib/listSkills";
 
 export default function SkillsPrograming() {
   return (
-    <div>
-      <h1 className="md:text-4xl text-3xl font-bold italic text-center pb-20 text-white">
+    <div id="skills">
+      <h1 className="~text-3xl/5xl font-bold italic text-center md:pb-20 pb-7 text-white">
         {"<Skills Programming />"}
       </h1>
-      <div className="grid grid-cols-3 md:grid-cols-5 justify-center md:gap-10 gap-5 md:pb-15 pb-7">
+      <div className="flex flex-wrap justify-center gap-5 md:gap-8 pb-10 md:pb-20  lg:px-32">
         {skillProgramming.map((skill, index) => {
           return (
             <Card key={index}>
@@ -17,7 +17,7 @@ export default function SkillsPrograming() {
           );
         })}
       </div>
-      <h1 className="md:text-4xl text-3xl font-bold italic text-center md:pb-15 pb-7 text-white">
+      <h1 className="~text-3xl/5xl font-bold italic text-center md:pb-15 pb-10 text-white">
         {"<Skills Tools />"}
       </h1>
       <div className="flex flex-wrap justify-center gap-5 md:gap-10">

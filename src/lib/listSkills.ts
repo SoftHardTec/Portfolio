@@ -1,7 +1,7 @@
 export const skillProgramming = [
   {
     name: "HTML5",
-    image: "src/assets/HTML5.svg",
+    image: "/src/assets/HTML5.svg",
   },
   {
     name: "CSS3 ",

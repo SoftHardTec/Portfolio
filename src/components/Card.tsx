@@ -2,9 +2,16 @@ import React from "react";
 
 interface CardProps {
   children: React.ReactNode;
+  variant?: "flexRow" | "flexCol";
+  size?: "sm" | "md" | "lg";
   className?: string;
 }
-export default function Card({ children, className }: CardProps) {
+export default function Card({
+  children,
+  variant = "flexRow",
+  size = "md",
+  className,
+}: CardProps) {
   let image: React.ReactNode = null;
   let title: React.ReactNode = null;
 
@@ -17,14 +24,22 @@ export default function Card({ children, className }: CardProps) {
       }
     }
   });
+  const sizes = {
+    sm: "flex items-center justify-center size-8 md:size-10",
+    md: "flex items-center justify-center size-10 md:size-12",
+    lg: "flex items-center justify-center size-12 md:size-14",
+  };
 
-  const classes = `flex bg-black w-fit border-2 border-gray-500 drop-shadow-xl rounded-2xl md:p-6 p-3 backdrop-blur-3xl  items-center justify-center gap-3 ${className}`;
+  const variants = {
+    flexRow: "flex flex-row ",
+    flexCol: "flex flex-col ",
+  };
+
+  const classes = `${variants[variant]} bg-black w-fit border-2 border-gray-500 drop-shadow-xl rounded-2xl md:p-6 p-3 backdrop-blur-3xl  items-center justify-center gap-3 ${className}`;
   return (
     <div className={classes}>
-      <div className="flex md:size-10 size-12 items-center justify-center gap-3">
-        {image}
-      </div>
-      <div className="md:flex items-center hidden justify-center font-bold md:text-xl text-md gap-3">
+      <div className={sizes[size]}>{image}</div>
+      <div className="md:flex items-center hidden justify-center font-bold ~text-md/xl text-md gap-3">
         {title}
       </div>
     </div>

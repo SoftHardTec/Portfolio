@@ -27,7 +27,7 @@ const GlowCursor = () => {
   return (
     isVisible && (
       <div
-        className="pointer-events-none fixed z-100 hidden lg:flex h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 items-center justify-center transition-transform duration-300 ease-out"
+        className="pointer-events-none fixed z-[100] hidden lg:flex h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 items-center justify-center transition-transform duration-300 ease-out"
         style={{
           left: `${position.x}px`,
           top: `${position.y}px`,

@@ -70,7 +70,7 @@ function App() {
           </div>
         </section>
         <section
-          id="contact"
+          id="contactMe"
           className="relative h-screen w-full flex justify-center items-center"
         >
           <div className="relative z-10 w-full ">
@@ -78,7 +78,7 @@ function App() {
           </div>
         </section>
       </main>
-      <footer id="contact" className="relative z-30 w-full bg-bg ">
+      <footer className="relative z-30 w-full bg-bg ">
         <Footer />
       </footer>
     </div>

@@ -16,6 +16,8 @@ export default {
       colors: {
         bg: "#0c0c0c",
         "primary-violet": "#b21ddb",
+        "card-bg": "var(--card-bg)",
+        "card-border": "var(--card-border)",
       },
     },
   },

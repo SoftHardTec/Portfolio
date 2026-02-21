@@ -25,8 +25,8 @@ export default function Hero() {
         </BlurText>
 
         <p className="~text-lg/xl font-light italic text-gray-100 max-w-lg">
-          "La inteligencia no proviene de saber mucho, sino de entender que cada
-          día aprenderás algo nuevo."
+          "Intelligence doesn't come from knowing a lot, but from understanding
+          that you will learn something new every day."
         </p>
 
         <div className="flex gap-6 mt-4">

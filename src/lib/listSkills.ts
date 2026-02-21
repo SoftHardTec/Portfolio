@@ -1,57 +1,57 @@
 export const skillProgramming = [
   {
     name: "HTML5",
-    image: "/src/assets/HTML5.svg",
+    image: "/HTML5.svg",
   },
   {
     name: "CSS3 ",
-    image: "src/assets/CSS3.svg",
+    image: "/CSS3.svg",
   },
   {
     name: "JavaScript",
-    image: "src/assets/JavaScript.svg",
+    image: "/JavaScript.svg",
   },
   {
     name: "TypeScript",
-    image: "src/assets/TypeScript.svg",
+    image: "/TypeScript.svg",
   },
   {
     name: "React",
-    image: "src/assets/React.svg",
+    image: "/React.svg",
   },
   {
     name: "Next JS",
-    image: "src/assets/Nextjs.svg",
+    image: "/Nextjs.svg",
   },
   {
     name: "Tailwind CSS",
-    image: "src/assets/Tailwind.svg",
+    image: "/Tailwind.svg",
   },
   {
     name: "PostgresSQL",
-    image: "src/assets/PostgresSQL.svg",
+    image: "/PostgresSQL.svg",
   },
   {
     name: "MySQL",
-    image: "src/assets/MySQL.svg",
+    image: "/MySQL.svg",
   },
   {
     name: "Node JS",
-    image: "src/assets/Node.png",
+    image: "/Node.png",
   },
 ];
 
 export const skillsTools = [
   {
     name: "Git",
-    image: "src/assets/Git.svg",
+    image: "/Git.svg",
   },
   {
     name: "GitHub",
-    image: "src/assets/GitHub.svg",
+    image: "/GitHub.svg",
   },
   {
     name: "Terminal",
-    image: "src/assets/Terminal.svg",
+    image: "/Terminal.svg",
   },
 ];

@@ -6,26 +6,23 @@ import Antigravity from "./components/ui/Antigravity";
 import SkillsPrograming from "./components/skills/index.tsx";
 import Footer from "./components/layout/Footer";
 import AboutMe from "./components/aboutMe/index.tsx";
+import Projects from "./components/projects/index.tsx";
+import ContactMe from "./components/contactMe/index.tsx";
 
 const AntigravityAll = () => {
   return (
     <div className="absolute inset-0 z-0">
       <Antigravity
         count={150}
-        magnetRadius={10}
-        ringRadius={5}
-        waveSpeed={0.4}
-        waveAmplitude={0.9}
-        particleSize={0.5}
+        ringRadius={2}
+        particleSize={0.4}
         lerpSpeed={0.1}
         color="#b21ddb"
-        autoAnimate={false}
         particleVariance={0.1}
         rotationSpeed={0.1}
         depthFactor={0.3}
         pulseSpeed={5}
         particleShape="capsule"
-        fieldStrength={7}
         blur={15}
       />
     </div>
@@ -64,8 +61,24 @@ function App() {
             <SkillsPrograming />
           </div>
         </section>
+        <section
+          id="projects"
+          className="relative h-screen w-full flex justify-center items-center"
+        >
+          <div className="relative z-10 w-full ">
+            <Projects />
+          </div>
+        </section>
+        <section
+          id="contact"
+          className="relative h-screen w-full flex justify-center items-center"
+        >
+          <div className="relative z-10 w-full ">
+            <ContactMe />
+          </div>
+        </section>
       </main>
-      <footer id="contact" className="relative z-30 w-full bg-bg snap-start">
+      <footer id="contact" className="relative z-30 w-full bg-bg ">
         <Footer />
       </footer>
     </div>

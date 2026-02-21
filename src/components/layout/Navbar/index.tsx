@@ -3,11 +3,8 @@ import { useState, useEffect, useRef } from "react";
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const liStyle =
-    "flex gap-3 items-center font-bold hover:text-primary-violet hover:scale-110 hover:underline hover:underline-offset-10 transition-colors duration-300 ";
-  const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-
+  const menuRef = useRef<HTMLDivElement>(null);
   const handleScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
@@ -17,7 +14,7 @@ export default function Navbar() {
     const targetId = href.replace("#", "");
     const elem = document.getElementById(targetId);
     if (elem) {
-      const headerOffset = 112; // Altura aproximada del navbar (h-28)
+      const headerOffset = 112;
       const elementPosition = elem.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
@@ -27,6 +24,29 @@ export default function Navbar() {
       });
     }
   };
+  const liStyle =
+    "flex gap-3 items-center font-bold hover:text-primary-violet hover:scale-110 hover:border-primary-violet active:scale-105 ctive:duration-300 active:text-primary-violet/10 transition-colors duration-300 ";
+
+  const navLinks = [
+    { href: "#home", label: "Home", icon: <House size={20} /> },
+    { href: "#aboutMe", label: "About me", icon: <User size={20} /> },
+    { href: "#skills", label: "Skills", icon: <CodeXml size={20} /> },
+    { href: "#projects", label: "Projects", icon: <Folder size={20} /> },
+    { href: "#contactMe", label: "Contact me", icon: <Mail size={20} /> },
+  ];
+
+  const liElements = navLinks.map((link) => (
+    <li key={link.href}>
+      <a
+        href={link.href}
+        className={liStyle}
+        onClick={(e) => handleScroll(e, link.href)}
+      >
+        {link.icon}
+        {link.label}
+      </a>
+    </li>
+  ));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,66 +75,17 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 bg-bg z-50 h-[5.5rem] w-full flex md:px-8 px-5 items-center ">
+      <div className="fixed top-0 left-0 bg-bg z-50 h-[5.5rem] lg:h-[6.5rem] w-full flex md:px-8 px-5 items-center ">
         <div className="flex justify-start absolute p-4">
           <img
-            src="src/assets/YonalfredDev.png"
+            src="/YonalfredDev.png"
             alt="logo"
             className="hover:scale-110 duration-300 transition-all size-44 md:size-60 "
           />
         </div>
         <nav className="hidden lg:flex md:justify-end w-full mr-10">
           <ul className="flex justify-center gap-10 md:gap-15  xl:gap-25">
-            <li>
-              <a
-                href="#home"
-                className={liStyle}
-                onClick={(e) => handleScroll(e, "#home")}
-              >
-                <House size={20} />
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="#aboutMe"
-                className={liStyle}
-                onClick={(e) => handleScroll(e, "#aboutMe")}
-              >
-                <User size={20} />
-                About me
-              </a>
-            </li>
-            <li>
-              <a
-                href="#skills"
-                className={liStyle}
-                onClick={(e) => handleScroll(e, "#skills")}
-              >
-                <CodeXml size={20} />
-                Skills
-              </a>
-            </li>
-            <li>
-              <a
-                href="#projects"
-                className={liStyle}
-                onClick={(e) => handleScroll(e, "#projects")}
-              >
-                <Folder size={20} />
-                Projects
-              </a>
-            </li>
-            <li>
-              <a
-                href="#contact"
-                className={liStyle}
-                onClick={(e) => handleScroll(e, "#contact")}
-              >
-                <Mail size={20} />
-                Contact
-              </a>
-            </li>
+            {liElements}
           </ul>
         </nav>
         <button
@@ -141,56 +112,7 @@ export default function Navbar() {
       >
         <nav className="flex flex-col items-center justify-start  h-full">
           <ul className="flex flex-col gap-10 text-xl font-bold text-white">
-            <li>
-              <a
-                href="#home"
-                className={`${liStyle}`}
-                onClick={(e) => handleScroll(e, "#home")}
-              >
-                <House size={20} />
-                Home
-              </a>
-            </li>
-            <li>
-              <a
-                href="#aboutMe"
-                className={`${liStyle}`}
-                onClick={(e) => handleScroll(e, "#aboutMe")}
-              >
-                <User size={20} />
-                About me
-              </a>
-            </li>
-            <li>
-              <a
-                href="#skills"
-                className={`${liStyle}`}
-                onClick={(e) => handleScroll(e, "#skills")}
-              >
-                <CodeXml size={20} />
-                Skills
-              </a>
-            </li>
-            <li>
-              <a
-                href="#projects"
-                className={`${liStyle}`}
-                onClick={(e) => handleScroll(e, "#projects")}
-              >
-                <Folder size={20} />
-                Projects
-              </a>
-            </li>
-            <li>
-              <a
-                href="#contact"
-                className={`${liStyle}`}
-                onClick={(e) => handleScroll(e, "#contact")}
-              >
-                <Mail size={20} />
-                Contact
-              </a>
-            </li>
+            {liElements}
           </ul>
         </nav>
       </div>

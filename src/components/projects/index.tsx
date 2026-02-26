@@ -15,7 +15,7 @@ function Projects() {
           return (
             <div
               key={index}
-              className="group relative flex flex-col w-36 h-52 sm:w-52 sm:h-72 lg:w-64 lg:h-80 bg-card-bg backdrop-blur-xl border border-card-border rounded-[1.5rem] overflow-hidden hover:border-primary-violet/60 transition-all duration-500 shadow-[0_0_30px_-10px_rgba(178,29,219,0.1)] hover:shadow-[0_0_40px_-5px_rgba(178,29,219,0.3)] hover:-translate-y-2"
+              className="group relative flex flex-col w-28 h-48 sm:w-52 sm:h-72 lg:w-64 lg:h-80 bg-card-bg backdrop-blur-xl border border-card-border rounded-[1.5rem] overflow-hidden hover:border-primary-violet/60 transition-all duration-500 shadow-[0_0_30px_-10px_rgba(178,29,219,0.1)] hover:shadow-[0_0_40px_-5px_rgba(178,29,219,0.3)] hover:-translate-y-2"
             >
               <div className="h-[45%] md:h-[55%] w-full overflow-hidden">
                 <img
@@ -26,7 +26,7 @@ function Projects() {
               </div>
               <div className="flex flex-col flex-grow p-5 justify-between">
                 <div>
-                  <h3 className="font-bold ~text-md/xl text-white mb-2 line-clamp-1">
+                  <h3 className="font-bold ~text-sm/xl text-white mb-2 ">
                     {project.name}
                   </h3>
                   <p className="text-gray-400 ~text-xs/md hidden sm:line-clamp-2">
@@ -34,7 +34,7 @@ function Projects() {
                   </p>
                 </div>
                 <button
-                  className="text-primary-violet font-semibold ~text-sm/md flex items-center gap-2 group/btn hover:translate-x-1 transition-transform duration-300"
+                  className="text-primary-violet font-semibold ~text-xs/lg flex items-center gap-2 group/btn hover:translate-x-1 transition-transform duration-300"
                   onClick={() => setOpenModal(project)}
                 >
                   Ver más <span>→</span>

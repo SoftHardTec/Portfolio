@@ -6,18 +6,21 @@ function AboutMe() {
       </h2>
       <div className="flex md:flex-row-reverse flex-col lg:gap-10 gap-0 items-center">
         <div className="w-full md:w-[50vw] justify-center md:justify-start rounded-2xl overflow-hidden">
-          <p className="text-white ~text-lg/2xl font-light max-w-3xl text-center md:text-left leading-relaxed pb-10 px-0 md:px-4">
+          <p className="text-white  ~text-md/2xl font-normal italic max-w-3xl text-left md:text-left leading-relaxed pb-10 px-0 md:px-4">
             I'm a web developer with over two years of programming experience,
             focused on creating immersive, functional, and fully responsive
             digital experiences. My specialty is developing scalable
             applications with React, Next.js, and TypeScript. In design, I focus
             on the modernity and efficiency offered by Tailwind CSS, while on
             the backend, I manage robust architectures with Node.js and Express,
-            with extensive experience in PostgreSQL and MySQL. Beyond the code,
-            I firmly believe that technology is a tool to simplify people's
-            lives, so my focus is always on technical usability. I'm a
-            self-taught learner; for me, every new challenge is an opportunity
-            to research, adapt new tools, and push my own boundaries.
+            with extensive experience in PostgreSQL and MySQL.{" "}
+            <span className="hidden md:block">
+              Beyond the code, I firmly believe that technology is a tool to
+              simplify people's lives, so my focus is always on technical
+              usability. I'm a self-taught learner; for me, every new challenge
+              is an opportunity to research, adapt new tools, and push my own
+              boundaries.
+            </span>
           </p>
         </div>
         <div className="flex w-full md:w-[40vw] justify-center md:justify-end ">
@@ -25,7 +28,7 @@ function AboutMe() {
             <img
               src="/photo.jpg"
               alt="Photo"
-              className="w-72 h-96 object-cover group-hover:scale-110 transition-transform duration-700"
+              className="md:w-72 md:h-96 w-56 h-64 object-cover group-hover:scale-110 transition-transform duration-700"
             />
           </div>
         </div>

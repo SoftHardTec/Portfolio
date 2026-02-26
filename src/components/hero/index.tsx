@@ -2,6 +2,25 @@ import Button from "@/components/Button";
 import BlurText from "@/components/ui/animatedText";
 
 export default function Hero() {
+  const handleScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+    const elem = document.getElementById(targetId);
+    if (elem) {
+      const headerOffset = 112;
+      const elementPosition = elem.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <div className="h-full w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-10">
       {/* Sección de Texto */}
@@ -30,9 +49,11 @@ export default function Hero() {
         </p>
 
         <div className="flex gap-6 mt-4">
-          <Button size="lg" variant="primary">
-            Contact Me
-          </Button>
+          <a href="#contactMe" onClick={(e) => handleScroll(e, "#contactMe")}>
+            <Button size="lg" variant="primary">
+              Contact Me
+            </Button>
+          </a>
           <Button size="md" variant="inline">
             My CV
           </Button>

@@ -8,6 +8,7 @@ import Footer from "./components/layout/Footer";
 import AboutMe from "./components/aboutMe/index.tsx";
 import Projects from "./components/projects/index.tsx";
 import ContactMe from "./components/contactMe/index.tsx";
+import ScrollAnimation from "./components/ui/scrollAnimation/index.tsx";
 
 const AntigravityAll = () => {
   return (
@@ -30,13 +31,13 @@ const AntigravityAll = () => {
 };
 function App() {
   return (
-    <div className="flex relative h-full w-full flex-col px-10 md:px-20 lg:px-30 bg-bg overflow-x-hidden">
+    <div className="flex relative h-full w-full flex-col bg-bg overflow-x-hidden">
       <GlowCursor />
       <AntigravityAll />
       <header className="z-50 ">
         <Navbar />
       </header>
-      <main className="grow relative min-h-[calc(100vh-7rem)] ">
+      <main className="grow relative flex flex-col gap-24 md:gap-32 min-h-[calc(100vh-7rem)] px-6 md:px-12 lg:px-24">
         <section
           id="home"
           className="relative h-screen w-full flex justify-center items-center"
@@ -47,38 +48,38 @@ function App() {
         </section>
         <section
           id="aboutMe"
-          className="relative h-screen w-full flex justify-center items-center"
+          className="relative w-full flex justify-center items-center scroll-mt-32"
         >
-          <div className="relative z-10 w-full ">
+          <ScrollAnimation>
             <AboutMe />
-          </div>
+          </ScrollAnimation>
         </section>
         <section
           id="skills"
-          className="relative h-screen w-full flex justify-center items-center"
+          className="relative w-full flex justify-center items-center scroll-mt-32"
         >
-          <div className="relative z-10 w-full ">
+          <ScrollAnimation from="left">
             <SkillsPrograming />
-          </div>
+          </ScrollAnimation>
         </section>
         <section
           id="projects"
-          className="relative h-screen w-full flex justify-center items-center"
+          className="relative w-full flex justify-center items-center scroll-mt-32"
         >
-          <div className="relative z-10 w-full ">
+          <ScrollAnimation from="right">
             <Projects />
-          </div>
+          </ScrollAnimation>
         </section>
         <section
           id="contactMe"
-          className="relative h-screen w-full flex justify-center items-center"
+          className="relative w-full flex justify-center items-center scroll-mt-32"
         >
-          <div className="relative z-10 w-full ">
+          <ScrollAnimation from="bottom">
             <ContactMe />
-          </div>
+          </ScrollAnimation>
         </section>
       </main>
-      <footer className="relative z-30 w-full bg-bg ">
+      <footer className="relative w-full pt-16">
         <Footer />
       </footer>
     </div>

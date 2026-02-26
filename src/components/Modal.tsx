@@ -1,5 +1,6 @@
 import type { Project } from "@/lib/listProjects";
 import { useEffect } from "react";
+import Button from "./Button";
 
 interface ModalProps {
   open: boolean;
@@ -90,15 +91,10 @@ export default function Modal({ open, onClose, data }: ModalProps) {
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex justify-center gap-4">
               {data.link && (
-                <a
-                  href={data.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 bg-primary-violet hover:bg-opacity-90 text-white text-center py-3 rounded-xl font-bold transition-all transform hover:scale-[1.02]"
-                >
-                  Ver Proyecto
+                <a href={data.link} target="_blank" rel="noopener noreferrer">
+                  <Button>Ver Proyecto</Button>
                 </a>
               )}
               {data.github && (
@@ -106,8 +102,9 @@ export default function Modal({ open, onClose, data }: ModalProps) {
                   href={data.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-bold transition-all border border-gray-700"
+                  className="flex px-4 py-2 gap-2 bg-gray-800 hover:bg-gray-700 text-white rounded-xl font-bold transition-all border border-gray-700"
                 >
+                  <img src="/GitHub.svg" alt="GitHub" className="size-6" />
                   GitHub
                 </a>
               )}

@@ -5,6 +5,7 @@ export default function Navbar() {
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+
   const handleScroll = (
     e: React.MouseEvent<HTMLAnchorElement>,
     href: string,
@@ -80,7 +81,7 @@ export default function Navbar() {
           <img
             src="/YonalfredDev.png"
             alt="logo"
-            className="hover:scale-110 duration-300 transition-all size-44 md:size-60 "
+            className="hover:scale-110 duration-300 transition-all  ~w-44/52 ~h-14/20"
           />
         </div>
         <nav className="hidden lg:flex md:justify-end w-full mr-10">

@@ -1,5 +1,6 @@
 import Button from "@/components/Button";
 import BlurText from "@/components/ui/animatedText";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
   const handleScroll = (
@@ -20,33 +21,40 @@ export default function Hero() {
       });
     }
   };
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setMounted(true);
+    }, 2000);
+  }, []);
 
   return (
     <div className="h-full w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-10">
       {/* Sección de Texto */}
       <div className="flex flex-col items-center md:items-start justify-center gap-6 w-full text-center md:text-left ">
-        <BlurText
-          delay={200}
-          animateBy="words"
-          className="text-center md:text-left"
-        >
-          <div className="flex flex-col items-center italic md:items-start justify-center gap-2">
-            <h1 className="~text-3xl/5xl font-bold text-primary-violet">
-              Hi, I'm{" "}
-            </h1>
-            <h1 className="~text-4xl/6xl font-bold">
-              {"<Yonalfred Guzmán />"}
-            </h1>
-            <h1 className="~text-4xl/6xl font-bold text-gray-300">
-              Web Developer
-            </h1>
-          </div>
-        </BlurText>
-
-        <p className="~text-lg/xl font-light italic text-gray-100 max-w-lg">
-          "Intelligence doesn't come from knowing a lot, but from understanding
-          that you will learn something new every day."
-        </p>
+        {mounted && (
+          <BlurText
+            delay={200}
+            animateBy="words"
+            className="text-center md:text-left"
+          >
+            <div className="flex flex-col items-center italic md:items-start justify-center gap-2">
+              <h1 className="~text-3xl/5xl font-bold text-primary-violet">
+                Hi, I'm{" "}
+              </h1>
+              <h1 className="~text-4xl/6xl font-bold">
+                {"<Yonalfred Guzmán />"}
+              </h1>
+              <h1 className="~text-4xl/6xl font-bold text-gray-300">
+                Web Developer
+              </h1>
+              <p className="~text-lg/xl font-light italic text-gray-100 max-w-lg">
+                "Intelligence doesn't come from knowing a lot, but from
+                understanding that you will learn something new every day."
+              </p>
+            </div>
+          </BlurText>
+        )}
 
         <div className="flex gap-6 mt-4">
           <a href="#contactMe" onClick={(e) => handleScroll(e, "#contactMe")}>

@@ -1,4 +1,5 @@
 import "./global.css";
+import { useState, useEffect } from "react";
 import Navbar from "./components/layout/Navbar/index.tsx";
 import GlowCursor from "./components/ui/cursorAnimate/index.tsx";
 import Hero from "./components/hero/index.tsx";
@@ -9,14 +10,15 @@ import AboutMe from "./components/aboutMe/index.tsx";
 import Projects from "./components/projects/index.tsx";
 import ContactMe from "./components/contactMe/index.tsx";
 import ScrollAnimation from "./components/ui/scrollAnimation/index.tsx";
+import Loading from "./components/ui/loading/index.tsx";
 
 const AntigravityAll = () => {
   return (
     <div className="absolute inset-0 z-0">
       <Antigravity
-        count={150}
+        count={170}
         ringRadius={2}
-        particleSize={0.4}
+        particleSize={0.3}
         lerpSpeed={0.1}
         color="#b21ddb"
         particleVariance={0.1}
@@ -24,14 +26,21 @@ const AntigravityAll = () => {
         depthFactor={0.3}
         pulseSpeed={5}
         particleShape="capsule"
-        blur={15}
+        blur={50}
       />
     </div>
   );
 };
 function App() {
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
   return (
     <div className="flex relative h-full w-full flex-col bg-bg overflow-x-hidden">
+      {loading && <Loading />}
       <GlowCursor />
       <AntigravityAll />
       <header className="z-50 ">

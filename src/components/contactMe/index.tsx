@@ -26,7 +26,7 @@ function ContactMe() {
       <h2 className="~text-3xl/5xl font-bold italic text-center text-white drop-shadow-[0_0_15px_rgba(178,29,219,0.5)]">
         {"<ContactMe />"}
       </h2>
-      <form className="flex flex-col bg-card-bg items-center backdrop-blur-xl border border-card-border rounded-3xl  md:p-12 p-8 w-[90vw] md:w-[650px] shadow-[0_0_60px_-15px_rgba(178,29,219,0.25)] ring-1 ring-white/5">
+      <form className="flex flex-col bg-primary-violet/10 items-center backdrop-blur-[3px] border border-card-border rounded-3xl  md:p-12 p-8 w-[90vw] md:w-[650px] shadow-[0_0_60px_-15px_rgba(178,29,219,0.25)] ring-1 ring-white/5">
         <h4 className="text-xl/3 font-bold text-white pb-10 tracking-tight">
           Send a Message
         </h4>

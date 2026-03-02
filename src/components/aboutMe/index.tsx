@@ -5,8 +5,8 @@ function AboutMe() {
         {"<About Me />"}
       </h2>
       <div className="flex md:flex-row-reverse flex-col lg:gap-10 gap-0 items-center">
-        <div className="w-full md:w-[50vw] justify-center md:justify-start rounded-2xl overflow-hidden">
-          <p className="text-white  ~text-md/2xl font-normal italic max-w-3xl text-left md:text-left leading-relaxed pb-10 px-0 md:px-4">
+        <div className="w-fit flex-1 justify-center md:justify-start rounded-2xl overflow-hidden hover:border-primary-violet/60 hover:bg-primary-violet/10 hover:shadow-[0_0_30px_-5px_rgba(178,29,219,0.3)]">
+          <p className="text-white  ~text-base/xl font-normal italic max-w-3xl text-left md:text-left leading-relaxed pb-10 px-0 md:px-4">
             I'm a web developer with over two years of programming experience,
             focused on creating immersive, functional, and fully responsive
             digital experiences. My specialty is developing scalable
@@ -23,7 +23,7 @@ function AboutMe() {
             </span>
           </p>
         </div>
-        <div className="flex w-full md:w-[40vw] justify-center md:justify-end ">
+        <div className="flex flex-2 w-full md:w-[40vw] justify-center md:justify-end ">
           <div className="rounded-[2.5rem] overflow-hidden border border-primary-violet/30 shadow-[0_0_50px_-10px_rgba(178,29,219,0.3)] transform -rotate-2 hover:rotate-0 transition-all duration-700 ease-out group">
             <img
               src="/photo.jpg"

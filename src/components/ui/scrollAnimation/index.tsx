@@ -36,6 +36,7 @@ function ScrollAnimation({
 }: ScrollAnimationProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  const [animationDone, setAnimationDone] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -43,14 +44,18 @@ function ScrollAnimation({
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setVisible(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setVisible(true);
+          // Quitamos las propiedades de animación después de que termine la transición
+          setTimeout(() => setAnimationDone(true), duration + delay);
+        }
       },
       { threshold },
     );
 
     observer.observe(el);
     return () => observer.disconnect();
-  }, [threshold]);
+  }, [threshold, duration, delay]);
 
   return (
     <div
@@ -58,12 +63,16 @@ function ScrollAnimation({
       className={className}
       style={{
         transform: visible
-          ? "translate(0, 0)"
+          ? animationDone
+            ? "none"
+            : "translate(0, 0)"
           : getInitialTransform(from, distance),
         opacity: visible ? 1 : 0,
-        transition: `transform ${duration}ms ease, opacity ${duration}ms ease`,
+        transition: animationDone
+          ? "none"
+          : `transform ${duration}ms ease, opacity ${duration}ms ease`,
         transitionDelay: `${delay}ms`,
-        willChange: "transform, opacity",
+        willChange: animationDone ? "auto" : "transform, opacity",
       }}
     >
       {children}

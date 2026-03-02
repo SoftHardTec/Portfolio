@@ -15,43 +15,42 @@ function Projects() {
           return (
             <div
               key={index}
-              className="group relative flex flex-col w-28 h-48 sm:w-52 sm:h-72 lg:w-64 lg:h-80 bg-card-bg backdrop-blur-xl border border-card-border rounded-[1.5rem] overflow-hidden hover:border-primary-violet/60 transition-all duration-500 shadow-[0_0_30px_-10px_rgba(178,29,219,0.1)] hover:shadow-[0_0_40px_-5px_rgba(178,29,219,0.3)] hover:-translate-y-2"
+              className="group relative flex flex-col w-28 h-48 sm:w-52 sm:h-72 lg:w-64 lg:h-80 bg-primary-violet/[0.07] backdrop-blur-sm backdrop-saturate-150 border border-white/[0.1] rounded-[1.5rem] hover:border-primary-violet/60 transition-all duration-500 shadow-xl hover:-translate-y-2"
             >
-              <div className="h-[45%] md:h-[55%] w-full overflow-hidden">
-                <img
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  src={project.img}
-                  alt={project.name}
-                />
-              </div>
-              <div className="flex flex-col flex-grow p-5 justify-between">
-                <div>
-                  <h3 className="font-bold ~text-sm/xl text-white mb-2 ">
-                    {project.name}
-                  </h3>
-                  <p className="text-gray-400 ~text-xs/md hidden sm:line-clamp-2">
-                    {project.description || "Description pending..."}
-                  </p>
+              <div className="flex flex-col h-full w-full overflow-hidden rounded-[1.5rem]">
+                <div className="h-[45%] md:h-[55%] w-full overflow-hidden">
+                  <img
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    src={project.img}
+                    alt={project.name}
+                  />
                 </div>
-                <button
-                  className="text-primary-violet font-semibold ~text-xs/lg flex items-center gap-2 group/btn hover:translate-x-1 transition-transform duration-300"
-                  onClick={() => setOpenModal(project)}
-                >
-                  Ver más <span>→</span>
-                </button>
+                <div className="flex flex-col flex-grow p-5 justify-between">
+                  <div>
+                    <h3 className="font-bold ~text-sm/xl text-white mb-2 ">
+                      {project.name}
+                    </h3>
+                    <p className="text-gray-400 ~text-xs/md hidden sm:line-clamp-2">
+                      {project.description || "Description pending..."}
+                    </p>
+                  </div>
+                  <button
+                    className="text-primary-violet font-semibold ~text-xs/lg flex items-center gap-2 group/btn hover:translate-x-1 transition-transform duration-300"
+                    onClick={() => setOpenModal(project)}
+                  >
+                    Ver más <span>→</span>
+                  </button>
+                </div>
               </div>
             </div>
           );
         })}
       </div>
-
-      {openModal && (
-        <Modal
-          open={!!openModal}
-          onClose={() => setOpenModal(null)}
-          data={openModal}
-        />
-      )}
+      <Modal
+        open={!!openModal}
+        onClose={() => setOpenModal(null)}
+        data={openModal || projects[0]}
+      />
     </div>
   );
 }

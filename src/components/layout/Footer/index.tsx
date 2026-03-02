@@ -50,7 +50,7 @@ export default function Footer() {
   };
 
   return (
-    <div className="flex w-full flex-col gap-10 justify-center items-center backdrop-blur-2xl border-t border-card-border pt-10 pb-6">
+    <div className="flex w-full flex-col bg-gradient-to-t from-bg via-bg/80 to-transparent gap-10 justify-center items-center backdrop-blur-sm pt-10 pb-6">
       <img
         src="/YonalfredDev.png"
         alt="YonalfredDev"

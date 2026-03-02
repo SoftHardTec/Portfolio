@@ -76,7 +76,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div className="fixed top-0 left-0 bg-bg z-50 h-[5.5rem] lg:h-[6.5rem] w-full flex md:px-8 px-5 items-center ">
+      <div className="fixed top-0 left-0 bg-bg/80 backdrop-blur-sm z-50 h-[5.5rem] lg:h-[6.5rem] w-full flex md:px-8 px-5 items-center ">
         <div className="flex justify-start absolute p-4">
           <img
             src="/YonalfredDev.png"

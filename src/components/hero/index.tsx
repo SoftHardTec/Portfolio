@@ -27,6 +27,9 @@ export default function Hero() {
       setMounted(true);
     }, 2000);
   }, []);
+  const openCV = () => {
+    window.open("/CV.pdf", "_blank"); // Abre en nueva pestaña
+  };
 
   return (
     <div className="h-full w-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-10">
@@ -62,7 +65,7 @@ export default function Hero() {
               Contact Me
             </Button>
           </a>
-          <Button size="md" variant="inline">
+          <Button onClick={openCV} size="md" variant="inline">
             My CV
           </Button>
         </div>

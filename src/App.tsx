@@ -14,7 +14,7 @@ import Loading from "./components/ui/loading/index.tsx";
 
 const AntigravityAll = () => {
   return (
-    <div className="absolute inset-0 z-0">
+    <div className="fixed inset-0 z-0 pointer-events-none">
       <Antigravity
         count={170}
         ringRadius={2}

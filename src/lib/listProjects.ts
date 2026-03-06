@@ -12,28 +12,28 @@ export const projects: Project[] = [
     name: "App Raffle",
     img: "/app-raffle.png",
     description:
-      "Web application for managing and selling raffle tickets, providing a fluid and clear user interface, adaptable to any device.",
+      "Web application for managing and selling raffle tickets, focused on user experience (UX/UI) and multi-device responsiveness. It implements a robust transactional communication flow using the Resend API and an optimized dynamic image storage infrastructure powered by Cloudinary.",
     technologies: ["NextJs", "Supabase", "Tailwind CSS", "Mantine"],
-    link: "https://www.juegacnnosotros.com/",
-    github: "https://github.com/SoftHardTec/rifas.git",
+    link: "https://raffle-red.vercel.app/",
+    github: "https://github.com/yonaljgp/rifas.git",
   },
   {
     name: "Dashboard Raffle",
     img: "/dashboard-raffle.png",
     description:
-      "Administration panel with graphs and payment verification, guaranteeing control and management of the raffle application",
+      "The administration panel features charts and payment verification, and includes a Telegram bot to notify you of each new purchase. Additionally, it uses Cloudinary's dynamic storage to capture payment information, ensuring control and optimizing response time.",
     technologies: ["NextJs", "Supabase", "Tailwind CSS", "Mantine"],
     link: "https://dashboard-raffle.vercel.app/",
-    github: "https://github.com/SoftHardTec/dashboard-raffle.git",
+    github: "https://github.com/yonaljgp/dashboard-raffle.git",
   },
   {
     name: "Earrings Payments",
     img: "/earrings-payments.png",
     description:
-      "system for handling outstanding payments with total per currency",
+      "System for managing outstanding payments with totals per currency, with a CRUD in localStorage to manage the use of information",
     technologies: ["NextJs", "Shadcn UI", "Tailwind CSS"],
     link: "https://app-payments-earrings.vercel.app",
-    github: "https://github.com/SoftHardTec/app-payments-earrings.git",
+    github: "https://github.com/yonaljgp/app-payments-earrings.git",
   },
   {
     name: "Electronica Jimenez",
@@ -41,15 +41,16 @@ export const projects: Project[] = [
     description:
       "Advertising website for an electronics company, with a separate page for each specialty.",
     technologies: ["HTML", "CSS", "JavaScript"],
+    github: "https://github.com/yonaljgp/electronica-jimenez.git",
     link: "https://electronicajimenez.com",
   },
   {
     name: "Excel Table Converter",
     img: "/excel-table-converter.png",
     description:
-      "Web application to convert Excel tables from one format to another provided",
+      "Web application to convert Excel tables from one format to another provided, using ExcelJS for handling Excel files",
     technologies: ["NodeJs", "ExcelJS", "Tailwind CSS"],
     link: "https://excel-table-converter.vercel.app/",
-    github: "https://github.com/SoftHardTec/excel-table-converter.git",
+    github: "https://github.com/yonaljgp/excel-table-converter.git",
   },
 ];

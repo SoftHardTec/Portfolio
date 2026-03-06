@@ -101,7 +101,7 @@ export default function Modal({ open, onClose, data }: ModalProps) {
 
                   <div className="mb-8">
                     <h4 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">
-                      Tecnologías
+                      technologies
                     </h4>
                     <div className="flex flex-wrap gap-2 md:gap-3">
                       {displayData.technologies.map((tech) => (

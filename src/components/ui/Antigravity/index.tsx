@@ -76,7 +76,7 @@ const AntigravityInner = ({
   // Click handler to trigger the circle formation
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
-    const handlePointerDown = (event: PointerEvent) => {
+    const handlePointerDown = (event: MouseEvent) => {
       // Improved position detection using canvas bounds
       const rect = gl.domElement.getBoundingClientRect();
       const x_px = event.clientX - rect.left;
@@ -97,10 +97,19 @@ const AntigravityInner = ({
       }, 2000);
     };
 
+    const handleScroll = () => {
+      if (interaction.current.active) {
+        interaction.current.active = false;
+        clearTimeout(timeoutId);
+      }
+    };
+
     // Attach to window to catch clicks anywhere
-    window.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("click", handlePointerDown);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
-      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("click", handlePointerDown);
+      window.removeEventListener("scroll", handleScroll);
       clearTimeout(timeoutId);
     };
   }, [viewport, gl]);
@@ -125,6 +134,21 @@ const AntigravityInner = ({
     return temp;
   });
 
+  // Track current positions in a ref to avoid resetting on resize
+  const particleState = useRef<
+    { cx: number; cy: number; cz: number; vx: number; vy: number; vz: number }[]
+  >([]);
+
+  // If seeds change or count changes, initialize state
+  useEffect(() => {
+    particleState.current = seeds.map((seed) => {
+      const x = seed.nmx * (viewport.width || 100);
+      const y = seed.nmy * (viewport.height || 100);
+      const z = seed.nmz * 20;
+      return { cx: x, cy: y, cz: z, vx: 0, vy: 0, vz: 0 };
+    });
+  }, [seeds, viewport.width, viewport.height]);
+
   // Derive actual particles from seeds + viewport
   const particles = useMemo<Particle[]>(() => {
     const width = viewport.width || 100;
@@ -135,28 +159,24 @@ const AntigravityInner = ({
       const y = seed.nmy * height;
       const z = seed.nmz * 20;
 
+      // When seeds change, particles array is recreated.
+      // But we will use particleState.current[i] inside useFrame for the actual animated pos.
       return {
-        t: seed.t,
-        factor: seed.factor,
-        speed: seed.speed,
-        xFactor: seed.xFactor,
-        yFactor: seed.yFactor,
-        zFactor: seed.zFactor,
+        ...seed,
         mx: x,
         my: y,
         mz: z,
-        cx: x,
+        cx: x, // dummy, will be overridden by ref in useFrame
         cy: y,
         cz: z,
         vx: 0,
         vy: 0,
         vz: 0,
-        randomRadiusOffset: seed.randomRadiusOffset,
       };
     });
   }, [seeds, viewport.width, viewport.height]);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     const mesh = meshRef.current;
     if (!mesh) return;
 
@@ -191,7 +211,6 @@ const AntigravityInner = ({
         const baseAngle = (i / count) * Math.PI * 2 + globalRotation;
 
         // Add disorder using the particle's stable random offset
-        // This makes it look "messy" but keeps it balanced because the baseAngle is uniform
         const jitterRadius = 1 + particle.randomRadiusOffset * 0.4;
         const jitterAngle = particle.randomRadiusOffset * 0.3;
 
@@ -206,11 +225,17 @@ const AntigravityInner = ({
         targetZ = stableZ;
       }
 
-      particle.cx += (targetX - particle.cx) * lerpSpeed;
-      particle.cy += (targetY - particle.cy) * lerpSpeed;
-      particle.cz += (targetZ - particle.cz) * lerpSpeed;
+      const pState = particleState.current[i];
+      if (!pState) return;
 
-      dummy.position.set(particle.cx, particle.cy, particle.cz);
+      const frameDelta = Math.min(delta, 0.1);
+      const lerpFactor = 1 - Math.pow(1 - lerpSpeed, frameDelta * 60);
+
+      pState.cx += (targetX - pState.cx) * lerpFactor;
+      pState.cy += (targetY - pState.cy) * lerpFactor;
+      pState.cz += (targetZ - pState.cz) * lerpFactor;
+
+      dummy.position.set(pState.cx, pState.cy, pState.cz);
 
       // Orientation
       if (interaction.current.active) {
@@ -220,10 +245,10 @@ const AntigravityInner = ({
         const projectedTargetY = interactionY * projectionFactor;
 
         // Look at the projected center of the circle at the same depth
-        dummy.lookAt(projectedTargetX, projectedTargetY, particle.cz);
+        dummy.lookAt(projectedTargetX, projectedTargetY, pState.cz);
       } else {
         dummy.rotation.set(0, 0, 0);
-        dummy.lookAt(0, 0, particle.cz);
+        dummy.lookAt(0, 0, pState.cz);
       }
 
       dummy.rotateX(Math.PI / 2);
@@ -241,8 +266,8 @@ const AntigravityInner = ({
 
         // Enforce circle scaling logic relative to the projected center and target radius
         const currentDistToCenter = Math.sqrt(
-          Math.pow(particle.cx - projectedTargetX, 2) +
-            Math.pow(particle.cy - projectedTargetY, 2),
+          Math.pow(pState.cx - projectedTargetX, 2) +
+            Math.pow(pState.cy - projectedTargetY, 2),
         );
         const distFromRing = Math.abs(currentDistToCenter - targetBaseRadius);
         let ringScale = 1 - distFromRing / 10;

@@ -2,7 +2,7 @@ import { skillProgramming, skillsTools } from "@/lib/listSkills";
 
 export default function SkillsPrograming() {
   const cardStyle =
-    "flex bg-[card-bg] w-fit border border-card-border hover:border-primary-violet/60 hover:bg-primary-violet/10 hover:shadow-[0_0_30px_-5px_rgba(178,29,219,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 backdrop-blur-md rounded-2xl md:p-6 p-4 items-center justify-center gap-4 ";
+    "flex bg-card-bg w-fit border border-card-border hover:border-primary-violet/60 hover:bg-primary-violet/10 hover:shadow-[0_0_30px_-5px_rgba(178,29,219,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 backdrop-blur-md rounded-2xl md:p-6 p-4 items-center justify-center gap-4 ";
   return (
     <div id="skills">
       <h2 className="~text-3xl/5xl font-bold italic text-center md:pb-20 pb-7 text-white">

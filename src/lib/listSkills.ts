@@ -39,6 +39,10 @@ export const skillProgramming = [
     name: "Node JS",
     image: "/Node.png",
   },
+  {
+    name: "Express",
+    image: "/Express.png",
+  },
 ];
 
 export const skillsTools = [
